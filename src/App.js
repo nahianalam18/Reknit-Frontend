@@ -5,9 +5,11 @@ import Home from "./components/homepage";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <React.Fragment>
+      <div className="App">
+        <Home />
+      </div>
+    </React.Fragment>
   );
 }
 

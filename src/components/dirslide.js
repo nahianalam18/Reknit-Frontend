@@ -8,8 +8,8 @@ class Dslide extends Component {
   imgArray = [
     "/nahian.jfif",
     "/sammy.jpg",
-    "alexis.jpg",
-    "gk.jpg",
+    "/IMG_6005.HEIC",
+    "/IMG_5999.HEIC",
     "ruben.jpg"
   ];
   state = {
