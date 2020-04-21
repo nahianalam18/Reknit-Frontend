@@ -3,11 +3,12 @@ import React, { Component } from "react";
 import { Tabs } from "antd";
 import HomeContent from "./homecontent";
 import Directors from "./directors";
+import FormManager from "./formmanager";
 
 const { TabPane } = Tabs;
 
 function callback(key) {
-  console.log(key);
+  // console.log(key);
 }
 
 class TopTab extends Component {
@@ -21,7 +22,7 @@ class TopTab extends Component {
               <HomeContent />
             </TabPane>
             <TabPane tab="Events" key="2">
-              Content of Tab Pane 2
+              <FormManager></FormManager>
             </TabPane>
             <TabPane className="TabsC" tab="About Us" key="3">
               <Directors></Directors>
