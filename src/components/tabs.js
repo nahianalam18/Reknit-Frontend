@@ -21,7 +21,11 @@ class TopTab extends Component {
             <TabPane tab="Home" key="1">
               <HomeContent />
             </TabPane>
-            <TabPane tab="Register" key="2">
+            <TabPane
+              tab="Register"
+              key="2"
+              style={{ color: "white", background: "blue" }}
+            >
               <FormManager></FormManager>
             </TabPane>
             <TabPane className="TabsC" tab="About Us" key="3">

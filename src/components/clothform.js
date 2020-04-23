@@ -1,43 +1,97 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
+import { Form, Input, message, Button, Menu, Dropdown } from "antd";
+import axios from "axios";
 
 class ClothForm extends Component {
-  state = {};
+  onFinish = (values) => {
+    axios.post(this.context.globalServerUrl, { values }).then((res) => {
+      console.log(res.data);
+      if (res.data.success === "True") {
+        message.success("Done with execution!");
+        this.context.setDataTable(res.data.data);
+      } else if (res.data.success === "Partial") {
+        message.warn("No records affected!");
+      } else {
+        message.error(res.data.Message);
+      }
+    });
+  };
+
+  onFinishFailed(value) {
+    console.log("NOT DONE");
+  }
+
   render() {
     return (
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar title="Donate Clothes"></AppBar>
-          <TextField // Text Fields to let the Teacher enter data of the student
-            hintText="Enter The Color of Cloth"
-            floatingLabelText="Color"
-            // onChange={this.props.handleChange("firstname")}
-            // defaultValue={this.props.values.firstname}
-          />
-          <br></br>
-          <TextField // Text Fields to let the Teacher enter data of the student
-            hintText="Enter The Material of Cloth"
-            floatingLabelText="Material"
-            // onChange={this.props.handleChange("firstname")}
-            // defaultValue={this.props.values.firstname}
-          />
+          <Form
+            name="basic"
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+          >
+            <Form.Item
+              name="Quantity"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the quantity!",
+                },
+              ]}
+            >
+              <Input placeholder="Quantity" />
+            </Form.Item>
+            <Form.Item
+              name="Material"
+              rules={[
+                {
+                  required: true,
+                  message: "Please choose a type of material",
+                },
+              ]}
+            >
+              <Input placeholder="Material" />
+            </Form.Item>
+            <Form.Item
+              name="Color"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter a Color!",
+                },
+              ]}
+            >
+              <Input placeholder="Color" />
+            </Form.Item>
+            <Form.Item
+              name="Email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter a Email!",
+                },
+              ]}
+            >
+              <Input placeholder="Email" />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
           <br />
-          <TextField
-            hintText="Enter Your Email Address"
-            floatingLabelText="Email"
-            // onChange={this.props.handleChange("lastname")}
-            // defaultValue={this.props.values.lastname}
-          />
           <br />
-          <RaisedButton
-            label="Continue"
-            primary={true}
-            // style={StyleSheet.button}
-            // onClick={this.continue}
-          />
         </React.Fragment>
       </MuiThemeProvider>
     );

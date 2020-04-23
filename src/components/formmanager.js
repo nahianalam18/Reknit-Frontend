@@ -8,7 +8,11 @@ import { DataManager } from "./StateManager";
 
 class FormManager extends Component {
   static contextType = DataManager;
-  state = {};
+  state = {
+    amount: "",
+    color: "",
+    material: "",
+  };
   registerAnswer = (value) => {
     this.context.changeRegist(value);
   };
