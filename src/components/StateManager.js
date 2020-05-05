@@ -4,8 +4,10 @@ export const DataManager = createContext();
 
 class StateManager extends Component {
   state = {
+    money: [[]],
+    clothes: [[]],
     regist: "0",
-    globalServerUrl: "http://93fe296f.ngrok.io/",
+    globalServerUrl: "http://ec4a1bf6.ngrok.io/",
     firstname: "",
     lastname: "",
     email: "",
@@ -22,6 +24,16 @@ class StateManager extends Component {
     uamount: "",
     ucolor: "",
     umaterial: "",
+    teamNo: true,
+  };
+  addMoneyLeader = (val) => {
+    this.setState({ money: val });
+  };
+  addClothLeader = (val) => {
+    this.setState({ clothes: val });
+  };
+  changeTeamNo = (val) => {
+    this.setState({ teamNo: val });
   };
   changeFirstName = (val) => {
     this.setState({ firstname: val });
@@ -115,6 +127,8 @@ class StateManager extends Component {
       <DataManager.Provider
         value={{
           ...this.state,
+          addMoneyLeader: this.addMoneyLeader,
+          addClothLeader: this.addClothLeader,
           changeRegist: this.changeRegist,
           changeFirstName: this.changeFirstName,
           changeLastName: this.changeLastName,
@@ -134,6 +148,7 @@ class StateManager extends Component {
           changeUMaterial: this.changeUMaterial,
           handleChange: this.handleChange,
           resetState: this.resetState,
+          changeTeamNo: this.changeTeamNo,
         }}
       >
         {this.props.children}

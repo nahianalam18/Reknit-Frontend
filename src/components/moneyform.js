@@ -1,39 +1,164 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
+import { Form, Input, Button } from "antd";
+import axios from "axios";
+import { DataManager } from "./StateManager";
 
 class MoneyForm extends Component {
-  state = {};
+  state = {
+    step: 1,
+  };
+  static contextType = DataManager;
+  registerAnswer = (value) => {
+    this.context.changeRegist(value);
+  };
+  onFinish = async (values) => {
+    console.log(values);
+    let res = await axios.post(this.context.globalServerUrl + "postMoney", {
+      values,
+    });
+    console.log(res);
+    if (res.data.Valid === false) {
+      this.setState({ step: 2 });
+      return;
+    } else this.setState({ step: 3 });
+    // axios
+    //   .post(this.context.globalServerUrl + "postData", { values })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
+    //this.registerAnswer(99);
+    // axios
+    //   .post(this.context.globalServerUrl + "checkTeam", { values })
+    //   .then((res) => {
+    //     this.context.changeTeamNo(res.data.AlreadyTeam[1]);
+    //   });
+    // if (this.context.teamNo == true || values.hasOwnProperty("TeamName")) {
+    //   this.context.changeRegist(0);
+    //   // axios
+    //   //   .post(this.context.globalServerUrl + "postData", { values })
+    //   //   .then((res) => {
+    //   //     this.teamResult = res.data.AlreadyTeam[1];
+    //   //   });
+    // } else {
+    // }
+  };
+
   render() {
-    return (
-      <MuiThemeProvider>
-        <React.Fragment>
-          <AppBar title="Donate Money"></AppBar>
-          <TextField // Text Fields to let the Teacher enter data of the student
-            hintText="Enter The Amount of Money You Would Like To Donate"
-            floatingLabelText="Amount"
-            // onChange={this.props.handleChange("firstname")}
-            // defaultValue={this.props.values.firstname}
-          />
-          <br />
-          <TextField
-            hintText="Enter Your Email Address"
-            floatingLabelText="Email"
-            // onChange={this.props.handleChange("lastname")}
-            // defaultValue={this.props.values.lastname}
-          />
-          <br />
-          <RaisedButton
-            label="Continue"
-            primary={true}
-            // style={StyleSheet.button}
-            // onClick={this.continue}
-          />
-        </React.Fragment>
-      </MuiThemeProvider>
-    );
+    switch (this.state.step) {
+      case 1:
+        return (
+          <MuiThemeProvider>
+            <React.Fragment>
+              <AppBar title="Donate Money"></AppBar>
+              <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={this.onFinish}
+                onFinishFailed={this.onFinishFailed}
+              >
+                <Form.Item
+                  name="amount"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter an Amount!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Amount" />
+                </Form.Item>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter an email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: "100%" }}
+                  >
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+              <br />
+              <br />
+            </React.Fragment>
+          </MuiThemeProvider>
+        );
+      case 2:
+        return (
+          <div>
+            <MuiThemeProvider>
+              <React.Fragment>
+                <AppBar title="Donate Money"></AppBar>
+                <Form
+                  name="basic"
+                  initialValues={{
+                    remember: true,
+                  }}
+                  onFinish={this.onFinish}
+                  onFinishFailed={this.onFinishFailed}
+                >
+                  <h1>
+                    The email is not valid! Plase try again with a valid email!
+                  </h1>
+                  <Form.Item
+                    name="amount"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter an Amount!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Amount" />
+                  </Form.Item>
+                  <Form.Item
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter an email!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Email" />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{ width: "100%" }}
+                    >
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <br />
+                <br />
+              </React.Fragment>
+            </MuiThemeProvider>
+          </div>
+        );
+      case 3:
+        return (
+          <React.Fragment>
+            <h1>Donation Successful!</h1>
+          </React.Fragment>
+        );
+    }
   }
 }
 

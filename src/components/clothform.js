@@ -1,22 +1,28 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
-import { Form, Input, message, Button, Menu, Dropdown } from "antd";
+import { Form, Input, Button } from "antd";
 import axios from "axios";
+import { DataManager } from "./StateManager";
 
 class ClothForm extends Component {
-  onFinish = (values) => {
-    axios.post(this.context.globalServerUrl, { values }).then((res) => {
-      console.log(res.data);
-      if (res.data.success === "True") {
-        message.success("Done with execution!");
-        this.context.setDataTable(res.data.data);
-      } else if (res.data.success === "Partial") {
-        message.warn("No records affected!");
-      } else {
-        message.error(res.data.Message);
-      }
+  state = { step: 1 };
+  static contextType = DataManager;
+  registerAnswer = (value) => {
+    this.context.changeRegist(value);
+  };
+  onFinish = async (values) => {
+    // this.registerAnswer(99);
+    console.log(values);
+    let res = await axios.post(this.context.globalServerUrl + "postCloth", {
+      values,
     });
+    console.log(res);
+    if (res.data.Valid === false) {
+      this.setState({ step: 2 });
+      return;
+    }
+    this.setState({ step: 3 });
   };
 
   onFinishFailed(value) {
@@ -24,77 +30,159 @@ class ClothForm extends Component {
   }
 
   render() {
-    return (
-      <MuiThemeProvider>
-        <React.Fragment>
-          <AppBar title="Donate Clothes"></AppBar>
-          <Form
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}
-          >
-            <Form.Item
-              name="Quantity"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter the quantity!",
-                },
-              ]}
-            >
-              <Input placeholder="Quantity" />
-            </Form.Item>
-            <Form.Item
-              name="Material"
-              rules={[
-                {
-                  required: true,
-                  message: "Please choose a type of material",
-                },
-              ]}
-            >
-              <Input placeholder="Material" />
-            </Form.Item>
-            <Form.Item
-              name="Color"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter a Color!",
-                },
-              ]}
-            >
-              <Input placeholder="Color" />
-            </Form.Item>
-            <Form.Item
-              name="Email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter a Email!",
-                },
-              ]}
-            >
-              <Input placeholder="Email" />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: "100%" }}
+    switch (this.state.step) {
+      case 1:
+        return (
+          <MuiThemeProvider>
+            <React.Fragment>
+              <AppBar title="Donate Clothes"></AppBar>
+              <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={this.onFinish}
+                onFinishFailed={this.onFinishFailed}
               >
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-          <br />
-          <br />
-        </React.Fragment>
-      </MuiThemeProvider>
-    );
+                <Form.Item
+                  name="quantity"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter the quantity!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Quantity" />
+                </Form.Item>
+                <Form.Item
+                  name="material"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please choose a type of material",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Material" />
+                </Form.Item>
+                <Form.Item
+                  name="color"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter a Color!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Color" />
+                </Form.Item>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter a Email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: "100%" }}
+                  >
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+              <br />
+              <br />
+            </React.Fragment>
+          </MuiThemeProvider>
+        );
+      case 2:
+        return (
+          <MuiThemeProvider>
+            <React.Fragment>
+              <AppBar title="Donate Clothes"></AppBar>
+              <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={this.onFinish}
+                onFinishFailed={this.onFinishFailed}
+              >
+                <h1>Invalid Email! Please try again with a proper email!</h1>
+                <Form.Item
+                  name="quantity"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter the quantity!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Quantity" />
+                </Form.Item>
+                <Form.Item
+                  name="material"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please choose a type of material",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Material" />
+                </Form.Item>
+                <Form.Item
+                  name="color"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter a Color!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Color" />
+                </Form.Item>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter a Email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: "100%" }}
+                  >
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+              <br />
+              <br />
+            </React.Fragment>
+          </MuiThemeProvider>
+        );
+      case 3:
+        return (
+          <React.Fragment>
+            <h1>Donation Successful!</h1>
+          </React.Fragment>
+        );
+    }
   }
 }
 
