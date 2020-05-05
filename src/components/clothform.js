@@ -12,7 +12,6 @@ class ClothForm extends Component {
     this.context.changeRegist(value);
   };
   onFinish = async (values) => {
-    // this.registerAnswer(99);
     console.log(values);
     let res = await axios.post(this.context.globalServerUrl + "postCloth", {
       values,

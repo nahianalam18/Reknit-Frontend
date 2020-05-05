@@ -69,8 +69,6 @@ class DisplayTable extends Component {
   };
   makeClothTableData = () => {
     let data = this.context.clothes;
-    console.log(this.context.clothes);
-    console.log(data);
     let finalResult = [];
     for (let i = 0; i < data.length; i++) {
       let result = {
@@ -82,12 +80,11 @@ class DisplayTable extends Component {
       };
       finalResult.push(result);
     }
-    //  console.log(finalResult);
+
     return finalResult;
   };
 
   render() {
-    // this.makeTableData();
     return (
       <React.Fragment>
         <h1>Money Leaderboard</h1>

@@ -18,14 +18,10 @@ class HomeContent extends Component {
   getData = async () => {
     const money = await axios.get(this.context.globalServerUrl + "getMoney");
     const cloth = await axios.get(this.context.globalServerUrl + "getCloth");
-    // this.setState({ money: money.data[1] });
-    // this.setState({ cloth: cloth.data[1] });
-    // this.context.addMoneyLeader(money.data[1]);
-    // this.context.addClothLeader(cloth.data[1]);
-    // console.log(this.context.money);
-    // console.log(this.context.clothes);
-    // console.log(this.state.money);
-    // console.log(this.state.cloth);
+    this.setState({ money: money.data[1] });
+    this.setState({ cloth: cloth.data[1] });
+    this.context.addMoneyLeader(money.data[1]);
+    this.context.addClothLeader(cloth.data[1]);
   };
   getUserData = () => {
     // Fetch data from database

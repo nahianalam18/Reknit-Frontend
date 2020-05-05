@@ -23,26 +23,6 @@ class MoneyForm extends Component {
       this.setState({ step: 2 });
       return;
     } else this.setState({ step: 3 });
-    // axios
-    //   .post(this.context.globalServerUrl + "postData", { values })
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
-    //this.registerAnswer(99);
-    // axios
-    //   .post(this.context.globalServerUrl + "checkTeam", { values })
-    //   .then((res) => {
-    //     this.context.changeTeamNo(res.data.AlreadyTeam[1]);
-    //   });
-    // if (this.context.teamNo == true || values.hasOwnProperty("TeamName")) {
-    //   this.context.changeRegist(0);
-    //   // axios
-    //   //   .post(this.context.globalServerUrl + "postData", { values })
-    //   //   .then((res) => {
-    //   //     this.teamResult = res.data.AlreadyTeam[1];
-    //   //   });
-    // } else {
-    // }
   };
 
   render() {

@@ -7,7 +7,7 @@ class StateManager extends Component {
     money: [[]],
     clothes: [[]],
     regist: "0",
-    globalServerUrl: "http://ec4a1bf6.ngrok.io/",
+    globalServerUrl: "http://08c55834.ngrok.io/",
     firstname: "",
     lastname: "",
     email: "",
@@ -25,6 +25,7 @@ class StateManager extends Component {
     ucolor: "",
     umaterial: "",
     teamNo: true,
+    guardianNecessary: true,
   };
   addMoneyLeader = (val) => {
     this.setState({ money: val });
@@ -34,6 +35,9 @@ class StateManager extends Component {
   };
   changeTeamNo = (val) => {
     this.setState({ teamNo: val });
+  };
+  changeGuardianStance = (val) => {
+    this.setState({ guardianNecessary: val });
   };
   changeFirstName = (val) => {
     this.setState({ firstname: val });
@@ -127,6 +131,7 @@ class StateManager extends Component {
       <DataManager.Provider
         value={{
           ...this.state,
+          changeGuardianStance: this.changeGuardianStance,
           addMoneyLeader: this.addMoneyLeader,
           addClothLeader: this.addClothLeader,
           changeRegist: this.changeRegist,
