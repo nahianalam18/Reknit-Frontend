@@ -181,6 +181,8 @@ class ClothForm extends Component {
             <h1>Donation Successful!</h1>
           </React.Fragment>
         );
+      default:
+        return <h1>Default</h1>;
     }
   }
 }

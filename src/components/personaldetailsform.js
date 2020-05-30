@@ -38,7 +38,7 @@ class Personalform extends Component {
     //Underage but in a team
     else if (
       age < 18 &&
-      this.context.teamNo == true &&
+      this.context.teamNo === true &&
       this.context.guardianNecessary === true
     ) {
       this.context.changeGuardianStance(false);
@@ -555,6 +555,8 @@ class Personalform extends Component {
             </React.Fragment>
           </MuiThemeProvider>
         );
+      default:
+        return <h1>Default</h1>;
     }
   }
 }

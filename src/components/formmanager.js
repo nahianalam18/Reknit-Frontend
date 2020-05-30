@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Formpersonal from "./personaldetailsform";
 import ClothForm from "./clothform";
 import MoneyForm from "./moneyform";
+import DeleteForm from "./deleteform";
 import { Button } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
 import { DataManager } from "./StateManager";
@@ -34,7 +35,7 @@ class FormManager extends Component {
             <Button
               type="primary"
               onClick={() => {
-                this.registerAnswer(99);
+                this.registerAnswer(6);
               }}
               style={{ margin: "10px" }}
             >
@@ -131,6 +132,45 @@ class FormManager extends Component {
               type="primary"
               danger
             ></Button>
+          </React.Fragment>
+        );
+      case 6:
+        return (
+          <React.Fragment>
+            <h1>Would you like a money donation refund?</h1>
+            <Button
+              onClick={() => {
+                this.registerAnswer(7);
+              }}
+              style={{ margin: "10px" }}
+              type="primary"
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={() => {
+                this.registerAnswer(99);
+              }}
+              style={{ margin: "10px" }}
+              type="primary"
+            >
+              No
+            </Button>
+            <br></br>
+            <Button
+              onClick={() => {
+                this.registerAnswer(1);
+              }}
+              icon={<LeftCircleOutlined />}
+              type="primary"
+              danger
+            ></Button>
+          </React.Fragment>
+        );
+      case 7:
+        return (
+          <React.Fragment>
+            <DeleteForm></DeleteForm>
           </React.Fragment>
         );
 

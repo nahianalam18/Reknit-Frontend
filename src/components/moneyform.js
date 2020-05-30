@@ -19,10 +19,15 @@ class MoneyForm extends Component {
       values,
     });
     console.log(res);
+
     if (res.data.Valid === false) {
       this.setState({ step: 2 });
       return;
-    } else this.setState({ step: 3 });
+    } else {
+      console.log(res.id);
+      this.context.changeDonationId(res.data.id);
+      this.setState({ step: 3 });
+    }
   };
 
   render() {
@@ -136,8 +141,11 @@ class MoneyForm extends Component {
         return (
           <React.Fragment>
             <h1>Donation Successful!</h1>
+            <h1>Your donation ID is {this.context.donationid}</h1>
           </React.Fragment>
         );
+      default:
+        return <h1>Default</h1>;
     }
   }
 }
